@@ -1,12 +1,12 @@
 const express = require('express');
 const createHttpError = require('http-errors');
 const path = require('path');
-const config = require('./config/config');
+//const config = require('./config/config');
 
 //impor routes
 const homeRoute = require('./routes/home')
 
-const PORT = process.env.PORT || config.PORT;
+const PORT = process.env.PORT || 4545;
 
 const app = express();
 
