@@ -1,0 +1,20 @@
+nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
+  a.navbar-brand(href='/') myDiary
+  button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+    span.navbar-toggler-icon 
+  #navbarSupportedContent.collapse.navbar-collapse
+    ul.navbar-nav.mr-auto
+      li.nav-item
+        a.nav-link(href='/')
+          | Home 
+          span.sr-only (current)
+      li.nav-item
+        a.nav-link(href='') Inquiry
+      li.nav-item
+        a.nav-link(href='') Contact
+    .form-inline.my-2.my-lg-0
+      ul.navbar-nav.mr-auto
+        li.nav-item.sgl
+          a.nav-link(href='/users/registration' style='color:rgb(72, 226, 72);') register
+        li.nav-item
+          a.nav-link(style='color:rgb(87, 216, 87);' href='/users/login') login
