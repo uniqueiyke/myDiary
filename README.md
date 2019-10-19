@@ -1,0 +1,2 @@
+This is a web app that will enable people to keep their daries on line. 
+This Online diary will enable one to allow others to view and read what they had made public for others to see. While their private records will remains private.
