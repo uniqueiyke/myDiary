@@ -1,0 +1,24 @@
+{
+  "name": "myDiary",
+  "version": "1.0.0",
+  "description": "A Diary web app that help people to keep their daily records ",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Ikechukwu Ajike",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.2.0",
+    "http-errors": "^1.7.3",
+    "mongoose": "^5.7.5",
+    "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
