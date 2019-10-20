@@ -12,7 +12,7 @@ block content
         input#firstName.form-control(type='text' name='firstName' value=(undefined===student ? '' : student.first_name) required='' placeholder='Type in your first name (eg. Chidinma)')
     .form-group
         label(for='email') Email
-        input#email.form-control(type='text' name='email'  required placeholder='Enter your card serial number')
+        input#email.form-control(type='text' name='email'  required placeholder='Enter your email')
     .form-group
         label(for='username') Username
         input#username.form-control(type='text' name='username'  placeholder='Choose a username')
@@ -20,6 +20,6 @@ block content
         label(for='password') Password
         input#password.form-control(type='password' name='password' required placeholder='password')
     .form-group
-        label(for='rePassword') Repeat Password
-        input#rePassword.form-control(type='password' name='rePassword' required placeholder='Re-enter the password')
+        label(for='confirmPassword') Confirm Password
+        input#confirmPassword.form-control(type='password' name='confirmPassword' required placeholder='Re-enter the password')
     button.btn.btn-primary(type='submit') Submit

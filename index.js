@@ -4,6 +4,9 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express');
 const createHttpError = require('http-errors');
 const path = require('path');
+const session = require('express-session');
+const passport = require('passport');
+require('./lib/passport-auth')(passport);
 
 //import and create the mongoDB connection
 const dbConnect = require('./db/db-connections');
@@ -26,6 +29,13 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', homeRoute);
 app.use('/users', userRoute);

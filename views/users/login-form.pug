@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    if err
+        .alert.alert-danger(role = 'alert') #{err}
+
+    form(action='' method='post')
+        .form-group
+            label(for='username') username
+            input#username.form-control(type='text' name='username'  required placeholder='email, username or phone number')
+        .form-group
+            label(for='password') Password
+            input#password.form-control(type='password' name='password' required placeholder='password')
+        button.btn.btn-primary(type='submit') Submit
