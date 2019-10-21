@@ -5,6 +5,7 @@ const express = require('express');
 const createHttpError = require('http-errors');
 const path = require('path');
 const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 require('./lib/passport-auth')(passport);
 
@@ -32,7 +33,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new MongoStore({
+    mongooseConnection: db,
+    ttl: 24 * 3600,
+    touchAfter: 12 * 3600
+  })
 }));
 app.use(passport.initialize());
 app.use(passport.session());

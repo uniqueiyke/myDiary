@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const {body, validationResult, sanitize} = require('express-validator');
 const bcryptHashedPassword = require('../lib/bcrypt-hash')
+// const passport = require('passport');
 
 exports.registerUser = (req, res, next) => {
     res.render('users/registration-form', {title: 'Sign up'});
@@ -33,13 +34,15 @@ exports.createUser = [
         try {
           const hashedPW = await bcryptHashedPassword(req.body.password)
           const user = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
             username: req.body.username,
-            phoneNumber: req.body.phone_number,
             password: hashedPW
           });
       
-        const retSave = await user.save();
-        console.log('value returned by user.save()', retSave);
+        await user.save();
+        
         req.login(user._id, err => {                     
             if (err) { return next(err); }
             //Successful - redirect to new student record.
@@ -54,5 +57,10 @@ exports.loginUser = (req, res, next) => {
     res.render('users/login-form', {title: 'login'});
 }
 exports.loginUserPost = (req, res, next) => {
-    res.json(req.body);
+    res.redirect(`/users/profile/${req.user._id}`);
+}
+
+exports.userProfile = async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    res.render('users/profile', {title:user.firstName, user: user});
 }

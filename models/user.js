@@ -14,7 +14,9 @@ const UserSchema = new Schema({
     username: {type: String, index: {unique: true}},
     phoneNumber: {type: String},
 })
-
+UserSchema.virtual('name').get(function () {
+    return `${this.firstName} ${this.lastName}`;
+})
 UserSchema.methods.comparePassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 }

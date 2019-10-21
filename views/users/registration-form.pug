@@ -1,25 +1,27 @@
 extends ../layout
 
 block content
-  if err
-    .alert.alert-danger(role = 'alert') #{err}
-  form(action='' method='post')
-    .form-group
-        label(for='lastName') Last Name
-        input#lastName.form-control(type='text' name='lastName' value=(undefined===student ? '' : student.last_name) required='' placeholder='Type in your surname (eg. Umunna)')
-    .form-group
-        label(for='firstName') First Name
-        input#firstName.form-control(type='text' name='firstName' value=(undefined===student ? '' : student.first_name) required='' placeholder='Type in your first name (eg. Chidinma)')
-    .form-group
-        label(for='email') Email
-        input#email.form-control(type='text' name='email'  required placeholder='Enter your email')
-    .form-group
-        label(for='username') Username
-        input#username.form-control(type='text' name='username'  placeholder='Choose a username')
-    .form-group
-        label(for='password') Password
-        input#password.form-control(type='password' name='password' required placeholder='password')
-    .form-group
-        label(for='confirmPassword') Confirm Password
-        input#confirmPassword.form-control(type='password' name='confirmPassword' required placeholder='Re-enter the password')
-    button.btn.btn-primary(type='submit') Submit
+    if err
+        .alert.alert-danger(role = 'alert') #{err}
+    form(action='' method='post')
+        .form-group
+            label(for='lastName') Last Name
+            input#lastName.form-control(type='text' name='lastName' value=(undefined===student ? '' : student.last_name) required='' placeholder='Type in your surname (eg. Umunna)')
+        .form-group
+            label(for='firstName') First Name
+            input#firstName.form-control(type='text' name='firstName' value=(undefined===student ? '' : student.first_name) required='' placeholder='Type in your first name (eg. Chidinma)')
+        .form-group
+            label(for='email') Email
+            input#email.form-control(type='text' name='email'  required placeholder='Enter your email')
+        .form-group
+            label(for='username') Username
+            input#username.form-control(type='text' name='username'  placeholder='Choose a username')
+        .form-group
+            label(for='password') Password
+            input#password.form-control(type='password' name='password' required placeholder='password')
+        .form-group
+            label(for='confirmPassword') Confirm Password
+            input#confirmPassword.form-control(type='password' name='confirmPassword' required placeholder='Re-enter the password')
+        button.btn.btn-primary(type='submit') Submit
+    
+    a(href= `/users/login`) login

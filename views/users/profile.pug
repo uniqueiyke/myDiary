@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+    h1 #{user.name}
+    p Last Name: #{user.lastName}
+    p First Name: #{user.firstName}
+    if (user.middleName !== '' && user.middleName !== undefined && user.middleName !== null)
+        p Other Names: #{user.middleName}
+    p Date of Registration: #{user.dateOfReg.toDateString()}
+    a.btn.btn-primary(href= `/users/logout`) logout
