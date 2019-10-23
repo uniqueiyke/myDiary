@@ -23,9 +23,9 @@ exports.createUser = [
         }
       }),
       //checking if password confirmation matches password
-      body('confirmPassword').custom((value, { req }) => {
+      body('confirmPassword').custom((value) => {
         if (value !== req.body.password) {
-            throw new Error('Password confirmation does not match password');
+            return new Error('Password confirmation does not match password');
         }
             // Indicates the success of this synchronous custom validator
             return true;
@@ -49,7 +49,7 @@ exports.createUser = [
             res.redirect(`/users/profile/${user._id}`);
         });
         } catch (error) {
-          res.redirect('/users/register');
+          res.redirect('/users/registration');
         }
       }
 ]

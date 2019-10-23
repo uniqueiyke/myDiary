@@ -8,6 +8,8 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 require('./lib/passport-auth')(passport);
+require('./lib/passport-google-auth')(passport);
+
 
 //import and create the mongoDB connection
 const dbConnect = require('./db/db-connections');
@@ -19,6 +21,7 @@ db.on('open', () => console.log('connected'));
 //impor routes
 const homeRoute = require('./routes/home');
 const userRoute = require('./routes/users');
+const authRoute = require('./routes/auth');
 
 const PORT = process.env.PORT || 4545
 
@@ -34,6 +37,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  unset: 'destroy',
   store: new MongoStore({
     mongooseConnection: db,
     ttl: 24 * 3600,
@@ -45,6 +49,7 @@ app.use(passport.session());
 
 app.use('/', homeRoute);
 app.use('/users', userRoute);
+app.use('/auth', authRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
