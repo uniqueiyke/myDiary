@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 require('./lib/passport-auth')(passport);
 require('./lib/passport-google-auth')(passport);
+require('./lib/passport-facebook-auth')(passport);
 
 
 //import and create the mongoDB connection
