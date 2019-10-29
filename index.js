@@ -1,15 +1,24 @@
+let sslOptions;
 if(process.env.NODE_ENV !== 'production'){
   require('dotenv').config();
+  const fs = require('fs');
+  sslOptions = {
+    key: fs.readFileSync("../cert1/server.key"),
+    cert: fs.readFileSync("../cert1/server.cer")
+  };
 }
+const https = require('https');
 const express = require('express');
 const createHttpError = require('http-errors');
 const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
-require('./lib/passport-auth')(passport);
-require('./lib/passport-google-auth')(passport);
-require('./lib/passport-facebook-auth')(passport);
+require('./lib/passport-config/passport-local-auth')(passport);
+require('./lib/passport-config/passport-google-auth')(passport);
+require('./lib/passport-config/passport-facebook-auth')(passport);
+require('./lib/passport-config/passport-twitter-auth')(passport);
+require('./lib/passport-config/passport-serialize')(passport);
 
 
 //import and create the mongoDB connection
@@ -39,9 +48,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   unset: 'destroy',
+  secure: true,
   store: new MongoStore({
     mongooseConnection: db,
-    ttl: 24 * 3600,
+    ttl: 24 * 3600 * 1000,
     touchAfter: 12 * 3600
   })
 }));
@@ -68,4 +78,5 @@ app.use(function(req, res, next) {
     res.render('error', {error: err});
   });
 
-  app.listen(PORT, () => console.log('server started on port ' + PORT));
+  https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
+//app.listen(PORT, () => console.log('server started on port ' + PORT));

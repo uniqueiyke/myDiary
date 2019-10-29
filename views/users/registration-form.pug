@@ -1,8 +1,8 @@
 extends ../layout
 
 block content
-    if err
-        .alert.alert-danger(role = 'alert') #{err}
+    if errorMessage
+        .alert.alert-danger(role = 'alert') #{errorMessage}
     form(action='' method='post')
         .form-group
             label(for='lastName') Last Name
@@ -27,4 +27,6 @@ block content
     a(href= `/users/login`) login
     #signup-div Sign up with
         a.btn.btn-danger(href= `/auth/google`) Google+
-        a.btn.btn-primary(href= `/auth/facebook`) Facebook
+        a.btn.btn-primary(href= `/auth/facebook`)
+            i.fab.fa-facebook-f Facebook
+        a.btn.btn-outline-primary(href= `/auth/twitter`) Twitter
