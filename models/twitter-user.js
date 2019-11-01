@@ -15,9 +15,10 @@ const TwitterUserSchema = new Schema({
     provider: String
 })
 
-// TwitterUserSchema.methods.comparePassword = async function (password) {
-//     return await bcrypt.compare(password, this.password);
-// }
+TwitterUserSchema.virtual('name').get(function () {
+    return `${this.firstName} ${this.lastName}`;
+});
+
 module.exports = model('TwitterUser', TwitterUserSchema);
 
 //clientID: 152865784250-5n7mh12cccf7ssbirga0v1d43viu5fhd.apps.Twitterusercontent.com

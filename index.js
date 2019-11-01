@@ -14,6 +14,8 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
+const UserInfo = require('./models/user-info');
+const UserModel = require('./lib/user-model-mapping');
 require('./lib/passport-config/passport-local-auth')(passport);
 require('./lib/passport-config/passport-google-auth')(passport);
 require('./lib/passport-config/passport-facebook-auth')(passport);
@@ -48,7 +50,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   unset: 'destroy',
-  secure: true,
+  // secure: true,
   store: new MongoStore({
     mongooseConnection: db,
     ttl: 24 * 3600 * 1000,
@@ -78,5 +80,5 @@ app.use(function(req, res, next) {
     res.render('error', {error: err});
   });
 
-  //https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
-app.listen(PORT, () => console.log('server started on port ' + PORT));
+  https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
+// app.listen(PORT, () => console.log('server started on port ' + PORT));

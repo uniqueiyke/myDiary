@@ -7,4 +7,7 @@ block content
     if (user.middleName !== '' && user.middleName !== undefined && user.middleName !== null)
         p Other Names: #{user.middleName}
     p Date of Registration: #{user.dateOfReg.toDateString()}
+    p email: #{user.email === undefined ? '' : user.email}
+    p You signed in using: #{user.provider}
+    p Username: #{user.username}
     a.btn.btn-primary(href= `/users/logout`) logout

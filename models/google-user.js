@@ -15,9 +15,10 @@ const GoogleUserSchema = new Schema({
     provider: String
 })
 
-// GoogleUserSchema.methods.comparePassword = async function (password) {
-//     return await bcrypt.compare(password, this.password);
-// }
+GoogleUserSchema.virtual('name').get(function () {
+    return `${this.firstName} ${this.lastName}`;
+});
+
 module.exports = model('GoogleUser', GoogleUserSchema);
 
 //clientID: 152865784250-5n7mh12cccf7ssbirga0v1d43viu5fhd.apps.googleusercontent.com

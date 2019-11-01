@@ -1,8 +1,8 @@
-const LocalUser = require('../models/local-user');
-const UserIn = require('../models/user');
 const {body, validationResult, sanitize} = require('express-validator');
-const bcryptHashedPassword = require('../lib/bcrypt-hash')
-// const passport = require('passport');
+const bcryptHashedPassword = require('../lib/bcrypt-hash');
+// const LocalUser = require('../models/local-user');
+const UserInfo = require('../models/user-info');
+const UserModel = require('../lib/user-model-mapping');
 
 exports.registerUser = (req, res, next) => {
     res.render('users/registration-form', {title: 'Sign up'});
@@ -16,7 +16,7 @@ exports.createUser = [
     body('email').isEmail().normalizeEmail(),
     //checking if e-mail or username is in use
     body('email').custom(async value => {
-        const user = await LocalUser.findOne({$or: [{email: value}, {username: value}]});
+        const user = await UserModel['local'].findOne({$or: [{email: value}, {username: value}]});
         if (user) {
             console.log(user);
             if(user.email === value)
@@ -34,13 +34,13 @@ exports.createUser = [
       }),
       async function(req, res, next) {
         try {
-            isUser = await UserIn.findOne({email: req.body.email});
+            isUser = await UserInfo.findOne({email: req.body.email});
             if(isUser){
                 console.log(isUser);
                 throw new Error(`You have already have account with this email using ${isUser.provider} authorization.\nYou can login using ${isUser.provider} link provided`)
             }
             const hashedPW = await bcryptHashedPassword(req.body.password)
-            const user = new LocalUser({
+            const user = new UserModel['local']({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -49,16 +49,17 @@ exports.createUser = [
             });
       
             await user.save();
-            const userIn = new UserIn({
+            const userInfo = new UserInfo({
                 userID: user._id,
                 email: user.email
+                
             })
-            await userIn.save();
+            await userInfo.save();
 
-            req.login(userIn._id, err => {                     
+            req.login(userInfo._id, err => {                     
                 if (err) { return next(err); }
                 //Successful - redirect to new student record.
-                res.redirect(`/users/profile/${user._id}`);
+                res.redirect(`/users/profile/${userInfo._id}`);
             });
         } catch (error) {
             console.error(error.message);
@@ -74,6 +75,7 @@ exports.loginUserPost = (req, res, next) => {
 }
 
 exports.userProfile = async (req, res, next) => {
-    const user = await LocalUser.findById(req.params.id);
-    res.render('users/profile', {title:user.firstName, user: user});
+    const userInfo = await UserInfo.findById(req.params.id);
+    const user = await UserModel[userInfo.provider].findById(userInfo.userID);
+    res.render('users/profile', {title: user.firstName, user: user});
 }
