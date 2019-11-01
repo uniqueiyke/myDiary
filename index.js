@@ -80,5 +80,5 @@ app.use(function(req, res, next) {
     res.render('error', {error: err});
   });
 
-  https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
-// app.listen(PORT, () => console.log('server started on port ' + PORT));
+  //https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
+app.listen(PORT, () => console.log('server started on port ' + PORT));
