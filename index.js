@@ -50,7 +50,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   unset: 'destroy',
-  // secure: true,
+  secure: true,
   store: new MongoStore({
     mongooseConnection: db,
     ttl: 24 * 3600 * 1000,
