@@ -1,7 +1,7 @@
 const {body, validationResult, sanitize} = require('express-validator');
 const bcryptHashedPassword = require('../lib/bcrypt-hash');
 // const LocalUser = require('../models/local-user');
-const UserInfo = require('../models/user-info');
+// const UserInfo = require('../models/user-info');
 const UserModel = require('../lib/user-model-mapping');
 
 exports.registerUser = (req, res, next) => {
@@ -34,11 +34,11 @@ exports.createUser = [
       }),
       async function(req, res, next) {
         try {
-            isUser = await UserInfo.findOne({email: req.body.email});
-            if(isUser){
-                console.log(isUser);
-                throw new Error(`You have already have account with this email using ${isUser.provider} authorization.\nYou can login using ${isUser.provider} link provided`)
-            }
+            // isUser = await UserInfo.findOne({email: req.body.email});
+            // if(isUser){
+            //     console.log(isUser);
+            //     throw new Error(`You have already have account with this email using ${isUser.provider} authorization.\nYou can login using ${isUser.provider} link provided`)
+            // }
             const hashedPW = await bcryptHashedPassword(req.body.password)
             const user = new UserModel['local']({
                 firstName: req.body.firstName,
@@ -49,17 +49,17 @@ exports.createUser = [
             });
       
             await user.save();
-            const userInfo = new UserInfo({
-                userID: user._id,
-                email: user.email
+            // const userInfo = new UserInfo({
+            //     userID: user._id,
+            //     email: user.email
                 
-            })
-            await userInfo.save();
+            // })
+            // await userInfo.save();
 
-            req.login(userInfo._id, err => {                     
+            req.login({id: user._id, provider: user.provider}, err => {                     
                 if (err) { return next(err); }
                 //Successful - redirect to new student record.
-                res.redirect(`/users/profile/${userInfo._id}`);
+                res.redirect(`/wall/${user._id}`);
             });
         } catch (error) {
             console.error(error.message);
@@ -71,11 +71,11 @@ exports.loginUser = (req, res, next) => {
     res.render('users/login-form', {title: 'login'});
 }
 exports.loginUserPost = (req, res, next) => {
-    res.redirect(`/users/profile/${req.user._id}`);
+    res.redirect(`/wall/${req.user.id}`);
 }
 
 exports.userProfile = async (req, res, next) => {
-    const userInfo = await UserInfo.findById(req.params.id);
-    const user = await UserModel[userInfo.provider].findById(userInfo.userID);
+    //const userInfo = await UserInfo.findById(req.params.id);
+    const user = await UserModel[req.user.provider].findById(req.params.id);
     res.render('users/profile', {title: user.firstName, user: user});
 }

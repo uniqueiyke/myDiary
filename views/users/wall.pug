@@ -1,0 +1,7 @@
+extends ../layout
+
+block content
+    h1 #{user.name}
+    .profile-img 
+        img(src=(user.photoPath), alt=(user.name + " Profile photo"), height="150")
+    h2 welcome to my wall

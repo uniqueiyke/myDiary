@@ -1,17 +1,17 @@
 const router = require('express').Router();
 const usersController = require('../controllers/users-controller');
 const passport = require('passport');
-const verifyAuth = require('../lib/verify-auth');
+const {checkAuthenticated, checkNotAuthenticated} = require('../lib/verify-auth');
 
-router.get('/registration', usersController.registerUser);
+router.get('/registration', checkNotAuthenticated, usersController.registerUser);
 
 router.post('/registration', usersController.createUser);
 
-router.get('/login', usersController.loginUser);
+router.get('/login', checkNotAuthenticated, usersController.loginUser);
 
 router.post('/login', passport.authenticate('local'), usersController.loginUserPost);
 
-router.get('/profile/:id', verifyAuth.checkAuthentication,  usersController.userProfile);
+router.get('/profile/:id', checkAuthenticated,  usersController.userProfile);
 
 router.get('/logout', (req, res) =>{
     req.logout();

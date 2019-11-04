@@ -6,8 +6,7 @@ router.get('/google',
 
 router.get('/google/callback', 
   passport.authenticate('google'), (req, res) => {
-    console.log(req.user._id);
-    res.redirect(`/users/profile/${req.user._id}`);
+    res.redirect(`/wall/${req.user.id}`);
   });
 
 router.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
@@ -20,8 +19,7 @@ router.get('/twitter', passport.authenticate('twitter'));
 
 router.get('/twitter/callback',
   passport.authenticate('twitter'), (req, res) => {
-    console.log(req.user._id);
-    res.redirect(`/users/profile/${req.user._id}`);
+    res.redirect(`/wall/${req.user.id}`);
 });
   
 module.exports = router;

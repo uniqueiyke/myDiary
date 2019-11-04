@@ -14,8 +14,7 @@ const path = require('path');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
-const UserInfo = require('./models/user-info');
-const UserModel = require('./lib/user-model-mapping');
+
 require('./lib/passport-config/passport-local-auth')(passport);
 require('./lib/passport-config/passport-google-auth')(passport);
 require('./lib/passport-config/passport-facebook-auth')(passport);
@@ -60,6 +59,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  res.locals.user = req.user;
+  next();
+});
+
 app.use('/', homeRoute);
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
@@ -80,5 +85,5 @@ app.use(function(req, res, next) {
     res.render('error', {error: err});
   });
 
-  //https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
-app.listen(PORT, () => console.log('server started on port ' + PORT));
+  https.createServer(sslOptions, app).listen(PORT, () => console.log('server  https://localhost:' + PORT));
+// app.listen(PORT, () => console.log('server started on port ' + PORT));

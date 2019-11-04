@@ -14,7 +14,16 @@ nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
         a.nav-link(href='') Contact
     .form-inline.my-2.my-lg-0
       ul.navbar-nav.mr-auto
-        li.nav-item.sgl
-          a.nav-link(href='/users/registration' style='color:rgb(72, 226, 72);') sign up
-        li.nav-item
-          a.nav-link(style='color:rgb(87, 216, 87);' href='/users/login') login
+        if isAuthenticated
+          li.nav-item
+            a.nav-link(style='color:rgb(87, 216, 87);' href=('/wall/' + user._id), data-toggle="popover", data-content="Wall") Wall
+          li.nav-item
+            a.nav-link(style='color:rgb(87, 216, 87);' href=('/users/profile/' + user._id), data-toggle="popover", data-content=(user.firstName + "'s profile"))
+              img(src=(user.photoPath), alt=(user.firstName), width="30", heigth="30")
+          li.nav-item
+            a.nav-link(style='color:rgb(87, 216, 87);' href='/users/logout') logout
+        else
+          li.nav-item.sgl
+            a.nav-link(href='/users/registration' style='color:rgb(72, 226, 72);') sign up
+          li.nav-item
+            a.nav-link(style='color:rgb(87, 216, 87);' href='/users/login') login
