@@ -19,6 +19,3 @@ const UserInfoSchema = new Schema({
 });
 
 module.exports = model('UserInfo', UserInfoSchema);
-
-//clientID: 152865784250-5n7mh12cccf7ssbirga0v1d43viu5fhd.apps.googleusercontent.com
-//clientSecret: XiPj3J-9kZTFhl__d91HwIR5

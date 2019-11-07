@@ -9,10 +9,12 @@ router.get('/google/callback',
     res.redirect(`/wall/${req.user.id}`);
   });
 
-router.get('/facebook', passport.authenticate('facebook', { scope: ['profile', 'email'] }));
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
   
-router.get('/facebook/callback', passport.authenticate('facebook'), (req, res) => {
-    res.send('facebook callback');
+router.get('/facebook/callback', 
+  passport.authenticate('facebook'), (req, res) => {
+    res.redirect(`/wall/${req.user.id}`);
+
 });
 
 router.get('/twitter', passport.authenticate('twitter'));

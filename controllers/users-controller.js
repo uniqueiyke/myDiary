@@ -1,7 +1,5 @@
 const {body, validationResult, sanitize} = require('express-validator');
 const bcryptHashedPassword = require('../lib/bcrypt-hash');
-// const LocalUser = require('../models/local-user');
-// const UserInfo = require('../models/user-info');
 const UserModel = require('../lib/user-model-mapping');
 
 exports.registerUser = (req, res, next) => {
@@ -34,11 +32,6 @@ exports.createUser = [
       }),
       async function(req, res, next) {
         try {
-            // isUser = await UserInfo.findOne({email: req.body.email});
-            // if(isUser){
-            //     console.log(isUser);
-            //     throw new Error(`You have already have account with this email using ${isUser.provider} authorization.\nYou can login using ${isUser.provider} link provided`)
-            // }
             const hashedPW = await bcryptHashedPassword(req.body.password)
             const user = new UserModel['local']({
                 firstName: req.body.firstName,
@@ -49,13 +42,6 @@ exports.createUser = [
             });
       
             await user.save();
-            // const userInfo = new UserInfo({
-            //     userID: user._id,
-            //     email: user.email
-                
-            // })
-            // await userInfo.save();
-
             req.login({id: user._id, provider: user.provider}, err => {                     
                 if (err) { return next(err); }
                 //Successful - redirect to new student record.
@@ -75,7 +61,6 @@ exports.loginUserPost = (req, res, next) => {
 }
 
 exports.userProfile = async (req, res, next) => {
-    //const userInfo = await UserInfo.findById(req.params.id);
     const user = await UserModel[req.user.provider].findById(req.params.id);
     res.render('users/profile', {title: user.firstName, user: user});
 }

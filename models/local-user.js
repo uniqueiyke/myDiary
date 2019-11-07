@@ -11,7 +11,7 @@ const LocalUserSchema = new Schema({
     dateOfReg: {type: Date, default: Date.now()},
     email: {type: String, require: true, index: {unique: true}},
     password: {type: String, require: true},
-    username: {type: String, index: {unique: true}},
+    username: String,
     phoneNumber: {type: String},
     provider: {type: String, default: 'local'}
 })
@@ -23,5 +23,3 @@ LocalUserSchema.methods.comparePassword = async function (password) {
 }
 module.exports = model('LocalUser', LocalUserSchema);
 
-//clientID: 152865784250-5n7mh12cccf7ssbirga0v1d43viu5fhd.apps.googleusercontent.com
-//clientSecret: XiPj3J-9kZTFhl__d91HwIR5
