@@ -2,8 +2,9 @@ extends ../layout
 
 block content
     h1 #{user.name}
-    .profile-img 
-        img(src=(user.photoPath), alt=(user.name + " Profile photo"), height="150")
+    #profile-img
+        a(href="" data-toggle='modal' data-target='#update-pics')
+            img(src=(user.photo !== undefined ? user.photoPath : ''), alt=(user.name + " Profile photo"), height="150")
     p Last Name: #{user.lastName}
     p First Name: #{user.firstName}
     if (user.middleName !== '' && user.middleName !== undefined && user.middleName !== null)
@@ -12,4 +13,16 @@ block content
     p email: #{user.email === undefined ? '' : user.email}
     p You signed in using: #{user.provider}
     p Username: #{user.username}
+
+    .modal.fade#update-pics(tabindex='-1' role='dialog')
+        .modal-dialog(role='document')
+        .modal-content
+            .modal-header
+            h5.modal-title Set Profile Picture
+            button.close(type='button' data-dismiss='modal' aria-label='Close')
+                span(aria-hidden='true') &times;
+            .modal-body
+            form(method='post' action=`https://localhost:4545/users/update-profile-pics/${user._id}`)
+                #photo-div.form-group
+                button.btn.btn-primary(type='submit') Submit
     a.btn.btn-primary(href= `/users/logout`) logout

@@ -19,7 +19,7 @@ nav.navbar.navbar-expand-lg.fixed-top.navbar-dark.bg-dark
             a.nav-link(style='color:rgb(87, 216, 87);' href=('/wall/' + user._id), data-toggle="popover", data-content="Wall") Wall
           li.nav-item
             a.nav-link(style='color:rgb(87, 216, 87);' href=('/users/profile/' + user._id), data-toggle="popover", data-content=(user.firstName + "'s profile"))
-              img(src=(user.photoPath), alt=(user.firstName), width="30", heigth="30")
+              img(src=(user.photo !== undefined ? user.photoPath : ''), alt=(user.firstName), width="30", heigth="30")
           li.nav-item
             a.nav-link(style='color:rgb(87, 216, 87);' href='/users/logout') logout
         else

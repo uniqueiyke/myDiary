@@ -13,6 +13,8 @@ router.post('/login', passport.authenticate('local'), usersController.loginUserP
 
 router.get('/profile/:id', checkAuthenticated,  usersController.userProfile);
 
+router.post('/update-profile-pics/:id', checkAuthenticated,  usersController.updateProflePics);
+
 router.get('/logout', (req, res) =>{
     req.logout();
     req.session = null;

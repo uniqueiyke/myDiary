@@ -1,7 +1,8 @@
 const router = require('express').Router();
-const checkAuthentication = require('../lib/verify-auth').checkAuthentication;
+const {checkAuthenticated} = require('../lib/verify-auth');
 
-router.get('/', checkAuthentication, (req, res, next) => {
-    res.send('diary form');
+router.get('/', (req, res, next) => {
+    res.render('posts/story');
 })
+
 module.exports = router;

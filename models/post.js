@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 
 const UserInfoSchema = new Schema({
     author: Schema.Types.ObjectId,
-    provider: {type: String, require: true, default: 'local'},
+    provider: {type: String, default: 'local'},
     title: String,
     body: String,
     createdDate: {type: Date, default: Date.now()},

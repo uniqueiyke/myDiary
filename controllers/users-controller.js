@@ -1,7 +1,7 @@
 const {body, validationResult, sanitize} = require('express-validator');
 const bcryptHashedPassword = require('../lib/bcrypt-hash');
 const UserModel = require('../lib/user-model-mapping');
-
+const mimeType = ['image/jpeg', 'image/png', 'image/gif'];
 exports.registerUser = (req, res, next) => {
     res.render('users/registration-form', {title: 'Sign up'});
 }
@@ -40,7 +40,7 @@ exports.createUser = [
                 username: req.body.username,
                 password: hashedPW
             });
-      
+            storePhoto(user, req.body.photo);
             await user.save();
             req.login({id: user._id, provider: user.provider}, err => {                     
                 if (err) { return next(err); }
@@ -64,3 +64,20 @@ exports.userProfile = async (req, res, next) => {
     const user = await UserModel[req.user.provider].findById(req.params.id);
     res.render('users/profile', {title: user.firstName, user: user});
 }
+
+exports.updateProflePics = async (req, res, next) => {
+    const user = await UserModel['local'].findById(req.params.id);    
+    storePhoto(user, req.body.photo);
+    await user.save();
+    res.redirect(`/users/profile/${user._id}`);
+}
+function storePhoto(doc, photoJson) {
+    if(photoJson){
+      const photoObj = JSON.parse(photoJson);
+      if(photoObj !== null && mimeType.includes(photoObj.type)){
+        doc.photo = Buffer.from(photoObj.data, 'base64');
+        doc.photoType = photoObj.type;
+      }
+    }
+    
+  }

@@ -33,6 +33,7 @@ db.on('open', () => console.log('connected'));
 const homeRoute = require('./routes/home');
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
 
 const PORT = process.env.PORT || 4545
 
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
 app.use('/', homeRoute);
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
+app.use('/post', postRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
