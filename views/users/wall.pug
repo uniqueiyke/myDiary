@@ -3,7 +3,7 @@ extends ../layout
 block content
     h1 #{user.name}
     .profile-img 
-        img(src=(user.photo !== undefined ? user.photoPath : ''), alt=(user.name + " Profile photo"), height="150")
+        img(src=((user.photo !== undefined || user.photoPath !== '') ? user.photoPath : ''), alt=(user.name + " Profile photo"), height="150")
     h2 welcome to my wall
     button.btn.btn-primary(type='button' data-toggle='modal' data-target='#create-card-form') Your Story
     .modal.fade#create-card-form(tabindex='-1' role='dialog')
@@ -14,10 +14,30 @@ block content
             button.close(type='button' data-dismiss='modal' aria-label='Close')
                 span(aria-hidden='true') &times;
             .modal-body
-            form(method='post' action='')
+            form(method='post' action='/posts/story')
                 .form-group
-                label(for='postTitle') Title
-                input#postTitle.form-control(type='text' name='postTitle' required placeholder='Title of your Story')
+                    label(for='postTitle') Title
+                    input#postTitle.form-control(type='text' name='title' required placeholder='Title of your Story')
+                .form-check
+                    input#private.form-check-input(type='radio' name='visibility' value='private' checked required)
+                    label.form-check-label(for='private')
+                    | Private
+                .form-check
+                    input#public.form-check-input(type='radio' name='visibility' value='public')
+                    label.form-check-label(for='public')
+                    | Public
                 .form-group
-                testarea#story.form-control(name='story' required placeholder='Your Story')
+                    textarea#story.form-control(name='story' cols='5' rows='10' required placeholder='Your Story')
                 button.btn.btn-primary(type='submit') Submit
+    if posts
+        each post in posts
+            .card
+                h5.card-header #{post.title}
+                .card-body
+                    p.card-text #{post.body}
+                    p.card-text(class=(post.visibility === 'private' ? "text-warning" : "text-success")) #{post.visibility}
+                .card-footer
+                    a.btn.btn-info(href= '#') Like
+                    a.btn.btn-secondary(href= '#') comment
+                    
+

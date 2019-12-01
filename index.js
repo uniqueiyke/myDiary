@@ -69,7 +69,7 @@ app.use((req, res, next) => {
 app.use('/', homeRoute);
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
-app.use('/post', postRoute);
+app.use('/posts', postRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

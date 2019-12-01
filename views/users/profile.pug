@@ -4,7 +4,7 @@ block content
     h1 #{user.name}
     #profile-img
         a(href="" data-toggle='modal' data-target='#update-pics')
-            img(src=(user.photo !== undefined ? user.photoPath : ''), alt=(user.name + " Profile photo"), height="150")
+            img(src=((user.photo !== undefined || user.photoPath !== '') ? user.photoPath : ''), alt=(user.name + " Profile photo"), height="150")
     p Last Name: #{user.lastName}
     p First Name: #{user.firstName}
     if (user.middleName !== '' && user.middleName !== undefined && user.middleName !== null)
