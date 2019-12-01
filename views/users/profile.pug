@@ -22,7 +22,7 @@ block content
             button.close(type='button' data-dismiss='modal' aria-label='Close')
                 span(aria-hidden='true') &times;
             .modal-body
-            form(method='post' action=`https://my-daily-diary.herokuapp.com//users/update-profile-pics/${user._id}`)
+            form(method='post' action=`https://my-daily-diary.herokuapp.com/users/update-profile-pics/${user._id}`)
                 #photo-div.form-group
                 button.btn.btn-primary(type='submit') Submit
     a.btn.btn-primary(href= `/users/logout`) logout
