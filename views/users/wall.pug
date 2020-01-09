@@ -29,15 +29,5 @@ block content
                 .form-group
                     textarea#story.form-control(name='story' cols='5' rows='10' required placeholder='Your Story')
                 button.btn.btn-primary(type='submit') Submit
-    if posts
-        each post in posts
-            .card
-                h5.card-header #{post.title}
-                .card-body
-                    p.card-text #{post.body}
-                    p.card-text(class=(post.visibility === 'private' ? "text-warning" : "text-success")) #{post.visibility}
-                .card-footer
-                    a.btn.btn-info(href= '#') Like
-                    a.btn.btn-secondary(href= '#') comment
-                    
-
+    include ../posts/story
+    +post(posts)

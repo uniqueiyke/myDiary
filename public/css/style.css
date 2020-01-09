@@ -14,3 +14,11 @@ body {
     font: bold;
     text-align: center
 }
+
+.comments-container{
+    padding-top: 10px;
+}
+
+.comment-card{
+    margin-bottom: 10px;
+}

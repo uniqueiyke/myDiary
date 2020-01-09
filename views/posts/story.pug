@@ -1,32 +1,24 @@
-extends ../layout
-
-block content
-    if errorMessage
-        .alert.alert-danger(role = 'alert') #{errorMessage}
-    form(action='' method='post')
-        .form-group
-            label(for='lastName') Last Name
-            input#lastName.form-control(type='text' name='lastName' value=(undefined===student ? '' : student.last_name) required='' placeholder='Type in your surname (eg. Umunna)')
-        .form-group
-            label(for='firstName') First Name
-            input#firstName.form-control(type='text' name='firstName' value=(undefined===student ? '' : student.first_name) required='' placeholder='Type in your first name (eg. Chidinma)')
-        .form-group
-            label(for='email') Email
-            input#email.form-control(type='text' name='email'  required placeholder='Enter your email')
-        .form-group
-            label(for='username') Username
-            input#username.form-control(type='text' name='username'  placeholder='Choose a username')
-        .form-group
-            label(for='password') Password
-            input#password.form-control(type='password' name='password' required placeholder='password')
-        .form-group
-            label(for='confirmPassword') Confirm Password
-            input#confirmPassword.form-control(type='password' name='confirmPassword' required placeholder='Re-enter the password')
-        button.btn.btn-primary(type='submit') Submit
-    
-    a(href= `/users/login`) login
-    #signup-div Sign up with
-        a.btn.btn-danger(href= `/auth/google`) Google+
-        a.btn.btn-primary(href= `/auth/facebook`)
-            i.fab.fa-facebook-f Facebook
-        a.btn.btn-outline-primary(href= `/auth/twitter`) Twitter
+mixin post(posts)
+    if posts
+            each post in posts
+                .card.border-dark
+                    h5.card-header.bg-dark.text-white #{post.title}
+                    .card-body
+                        p.card-text
+                            b #{post.createdDate.toDateString()}
+                        p.card-text #{post.body}
+                        p.card-text(class=(post.visibility === 'private' ? "text-warning" : "text-success")) #{post.visibility}
+                    .card-footer
+                        .like-comment
+                            a.btn.btn-info.likes(href="" data-url=(post.like) data-auth=(isAuthenticated)) 
+                                | Like 
+                                span.badge.badge-light.likes-badge #{post.likes.length}
+                            a.btn.btn-secondary.comments(href="" data-url=(post.comment) data-auth=(isAuthenticated)) 
+                                | Comment 
+                                span.badge.badge-light #{post.comments.length}
+                        .comments-container
+                            each comment in post.comments    
+                                .card.border-secondary.comment-card
+                                    h6.card-header.bg-secondary.text-white #{comment.commentedBy.name}
+                                    .card-body
+                                        p.card-text #{comment.comment}

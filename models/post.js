@@ -1,8 +1,8 @@
 const {Schema, model} = require('mongoose');
-const transformFunc = require('./transformation-functions');
-const bcrypt = require('bcrypt');
+// const transformFunc = require('./transformation-functions');
+// const bcrypt = require('bcrypt');
 
-const UserInfoSchema = new Schema({
+const PostSchema = new Schema({
     authorID: Schema.Types.ObjectId,
     provider: {type: String, default: 'local'},
     title: String,
@@ -10,17 +10,16 @@ const UserInfoSchema = new Schema({
     createdDate: {type: Date, default: Date.now()},
     editedDate: [Date],
     visibility: {type: String, lowercase: true, enum: ['private', 'public'], default: 'private'},
-    comments: [
-        {
-            commentedBy: Schema.Types.ObjectId,
-            body: String, 
-            date: Date 
-        }],
-    likesCount: {type: Number}
+    comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
+    likes: [{type: Schema.Types.ObjectId, ref: 'Like'}]
 });
 
-UserInfoSchema.virtual('likes').get(function () {
+PostSchema.virtual('like').get(function () {
     return `/posts/likes/${this._id}`;
-})
+});
 
-module.exports = model('UserInfo', UserInfoSchema);
+PostSchema.virtual('comment').get(function () {
+    return `/posts/comments/${this._id}`;
+});
+
+module.exports = model('Post', PostSchema);
