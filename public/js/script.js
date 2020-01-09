@@ -26,8 +26,8 @@ document.addEventListener('click', async e => {
             alretCommenOrLikeError(parentElement, 'Login to like a post.');
         }else{
             try {
-                const url = 'https://localhost:4545' + like.dataset.url;
-                // const url = 'https://my-daily-diary.herokuapp.com' + like.dataset.url;
+                // const url = 'https://localhost:4545' + like.dataset.url;
+                const url = 'https://my-daily-diary.herokuapp.com' + like.dataset.url;
                 // console.log(url);
                 const response = await fetch(url);
                 const data = await response.text();
@@ -75,8 +75,8 @@ document.addEventListener('click', async e => {
             data.comment = comments.previousElementSibling.value;
 
             // const parentElement = comments.parentElement;
-            const url = 'https://localhost:4545' + comments.dataset.url;
-            // const url = 'https://my-daily-diary.herokuapp.com' + comments.dataset.url;
+            // const url = 'https://localhost:4545' + comments.dataset.url;
+            const url = 'https://my-daily-diary.herokuapp.com' + comments.dataset.url;
             const fetchOptoin = {
                 method: 'POST',
                 body: JSON.stringify(data),
