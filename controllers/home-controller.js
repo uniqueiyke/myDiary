@@ -1,5 +1,6 @@
 const Like = require('../models/likes');
 const Comment = require('../models/comments');
+const Post = require('../models/post');
 const reducePosts = require('../lib/reduce-posts');
 
 exports.home = async (req, res, next) => {

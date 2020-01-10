@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const Post = require('../models/post');
 const {checkAuthenticated} = require('../lib/verify-auth');
 const HomeController = require('../controllers/home-controller');
 
